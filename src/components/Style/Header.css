@@ -1,0 +1,16 @@
+nav{
+    justify-content: center;
+    align-items: center;
+     position: relative;
+     background-color: green;
+     color: white;
+     margin: 0;
+     padding:0; 
+}
+
+h1{
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding:0;
+}
