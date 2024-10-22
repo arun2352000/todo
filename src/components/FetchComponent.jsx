@@ -9,7 +9,7 @@ const FetchComponent = () => {
   // const url = useURL();
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/Todo/getalltodo')
+    fetch('https://todo-backend-627a.onrender.com/api/Todo/getalltodo')
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -38,39 +38,39 @@ const FetchComponent = () => {
     setData(updatedData);
     setEditItemId(null);
 
-    fetch(`http://localhost:3000/api/Todo/updateTodo/${editItem.id}`, {
+    fetch(`https://todo-backend-627a.onrender.com/api/Todo/updateTodo/${editItem.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ title: editItem.title, description: editItem.description, completed: editItem.completed })
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Update successful:', data);
-    })
-    .catch((error) => {
-      console.error('Error updating data:', error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log('Update successful:', data);
+      })
+      .catch((error) => {
+        console.error('Error updating data:', error);
+      });
   };
 
   const handleDelete = (id) => {
     const updatedData = data.filter(item => item._id !== id);
     setData(updatedData);
 
-    fetch(`http://localhost:3000/api/Todo/deleteTodo/${id}`, {
+    fetch(`https://todo-backend-627a.onrender.com/api/Todo/deleteTodo/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Delete successful:', data);
-    })
-    .catch((error) => {
-      console.error('Error deleting data:', error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log('Delete successful:', data);
+      })
+      .catch((error) => {
+        console.error('Error deleting data:', error);
+      });
   };
 
   const toggleCompleted = (id) => {
@@ -82,20 +82,20 @@ const FetchComponent = () => {
     });
     setData(updatedData);
 
-    fetch(`http://localhost:3000/api/Todo/updateTodo/${id}`, {
+    fetch(`https://todo-backend-627a.onrender.com/api/Todo/updateTodo/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ completed: updatedData.find(item => item._id === id).completed })
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Toggle completed successful:', data);
-    })
-    .catch((error) => {
-      console.error('Error toggling completed state:', error);
-    });
+      .then(response => response.json())
+      .then(data => {
+        console.log('Toggle completed successful:', data);
+      })
+      .catch((error) => {
+        console.error('Error toggling completed state:', error);
+      });
   };
 
   return (

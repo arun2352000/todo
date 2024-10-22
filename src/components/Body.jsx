@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 const Body = () => {
-    const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [newItem, setNewItem] = useState({ title: '', description: '' });
   const [updateItem, setUpdateItem] = useState({ id: null, title: '', description: '' });
-  const url = 'http://localhost:3000/api/Todo/getalltodo';
+  const url = 'https://todo-backend-627a.onrender.com/api/Todo/getalltodo';
 
   useEffect(() => {
     fetchData();
@@ -92,7 +92,7 @@ const Body = () => {
           </li>
         ))}
       </ul>
-      
+
       <h2>Add New Item</h2>
       <form onSubmit={handleAdd}>
         <input
@@ -110,7 +110,7 @@ const Body = () => {
         />
         <button type="submit">Add</button>
       </form>
-      
+
       <h2>Update Item</h2>
       <form onSubmit={(e) => {
         e.preventDefault();
@@ -135,5 +135,5 @@ const Body = () => {
   );
 };
 
-export default Body; 
+export default Body;
 
