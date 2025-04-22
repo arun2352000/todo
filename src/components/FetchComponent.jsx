@@ -9,14 +9,20 @@ const FetchComponent = () => {
   // const url = useURL();
 
   useEffect(() => {
-    fetch('https://todo-backend-627a.onrender.com/api/Todo/getalltodo')
+    const token = localStorage.getItem("token"); // Retrieve the token
+  
+    fetch("https://todo-backend-627a.onrender.com/api/Todo/todos", {
+      headers: {
+        "Authorization": `Bearer ${token}` // Attach the token
+      }
+    })
       .then(response => response.json())
       .then(data => {
         console.log(data);
         setData(data.data || []);
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error("Error fetching todos:", error);
       });
   }, []);
 
@@ -38,12 +44,17 @@ const FetchComponent = () => {
     setData(updatedData);
     setEditItemId(null);
 
-    fetch(`https://todo-backend-627a.onrender.com/api/Todo/updateTodo/${editItem.id}`, {
-      method: 'PUT',
+    fetch(`https://todo-backend-627a.onrender.com/api/Todo/todos/${editItem.id}`, {
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}` // Attach token
       },
-      body: JSON.stringify({ title: editItem.title, description: editItem.description, completed: editItem.completed })
+      body: JSON.stringify({
+        title: editItem.title,
+        description: editItem.description,
+        completed: editItem.completed
+      })
     })
       .then(response => response.json())
       .then(data => {
@@ -58,10 +69,11 @@ const FetchComponent = () => {
     const updatedData = data.filter(item => item._id !== id);
     setData(updatedData);
 
-    fetch(`https://todo-backend-627a.onrender.com/api/Todo/deleteTodo/${id}`, {
+    fetch(`https://todo-backend-627a.onrender.com/api/Todo/todos/${id}`, {
       method: 'DELETE',
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}` // Attach token
       }
     })
       .then(response => response.json())

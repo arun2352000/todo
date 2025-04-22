@@ -1,27 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-import Body from './components/Body.jsx'
-import FormComponent from './components/FormComponent.jsx'
-import Navbar from './components/Navbar.jsx'
-import FetchComponent from './components/FetchComponent.jsx'
+import Navbar from "./components/Navbar";
+import FormComponent from "./components/FormComponent";
+import FetchComponent from "./components/FetchComponent";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [token, setToken] = useState(localStorage.getItem("token"));
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token"));
+  }, []);
 
   return (
-    <>
-      {/* <div>
-            <h1>this is app componenet</h1>
-      </div> */}
-      <Navbar/>
-      <FormComponent/>
-      {/* <Body/> */}
-      <FetchComponent/>
-    </>
-  )
+    <Router>
+      <Navbar token={token} /> {/* No need to pass handleLogout */}
+      <Routes>
+        {!token ? (
+          <>
+            <Route path="/signin" element={<SignIn setToken={setToken} />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="*" element={<Navigate to="/signin" />} />
+          </>
+        ) : (
+          <>
+            <Route path="/todos" element={<><FormComponent /><FetchComponent /></>} />
+            <Route path="*" element={<Navigate to="/todos" />} />
+          </>
+        )}
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

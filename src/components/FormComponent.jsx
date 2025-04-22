@@ -12,22 +12,24 @@ const FormComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token"); // Retrieve the stored token
+  
     try {
-      const response = await fetch('https://todo-backend-627a.onrender.com/api/Todo/createTodo', {
-        method: 'POST',
+      const response = await fetch("https://todo-backend-627a.onrender.com/api/Todo/todos", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // Attach the token
         },
         body: JSON.stringify(formData),
       });
       const result = await response.json();
-      console.log('Success:', result);
-      // Clear form fields after successful submission
-      setFormData({ title: '', description: '' });
-      // Trigger a page refresh after submission
-      window.location.reload();
+      console.log("Success:", result);
+  
+      setFormData({ title: "", description: "" }); // Clear form fields
+      window.location.reload(); // Refresh to reflect changes
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
